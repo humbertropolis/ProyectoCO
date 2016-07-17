@@ -5,9 +5,17 @@
  */
 package proyectoco;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
  *
- * @author ahab
+ * @authors
+ * Andres Humberto Agredo Bermudez 0623078 
+ * Fernando Sanchez Quintero 1225394 
+ * Juan Diego Prado Ramos 1226218 
+ * Nelson Portilla 1226934
  */
 public class GUIProyectoCO extends javax.swing.JFrame {
 
@@ -27,15 +35,25 @@ public class GUIProyectoCO extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuItemOpen = new javax.swing.JMenuItem();
         jMenuItemExit = new javax.swing.JMenuItem();
 
+        jFileChooser1.setDialogTitle("Abrir Archivo");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
 
         jMenuFile.setText("Archivo");
 
+        jMenuItemOpen.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK));
         jMenuItemOpen.setText("Abrir");
         jMenuItemOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -44,7 +62,13 @@ public class GUIProyectoCO extends javax.swing.JFrame {
         });
         jMenuFile.add(jMenuItemOpen);
 
+        jMenuItemExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_MASK));
         jMenuItemExit.setText("Salir");
+        jMenuItemExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemExitActionPerformed(evt);
+            }
+        });
         jMenuFile.add(jMenuItemExit);
 
         jMenuBar1.add(jMenuFile);
@@ -55,19 +79,34 @@ public class GUIProyectoCO extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOpenActionPerformed
-        System.exit(0); 
+        int returnVal = jFileChooser1.showOpenDialog(this);
+        if (returnVal == jFileChooser1.APPROVE_OPTION) {
+            File file = jFileChooser1.getSelectedFile();
+            try {
+                // What to do with the file, e.g. display it in a TextArea
+                jTextArea1.read( new FileReader( file.getAbsolutePath() ), null );
+            } catch (IOException ex) {
+                System.out.println("problem accessing file"+file.getAbsolutePath());
+            }
+        } else {
+            System.out.println("File access cancelled by user.");
+        }
     }//GEN-LAST:event_jMenuItemOpenActionPerformed
+
+    private void jMenuItemExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExitActionPerformed
+        System.exit(0);         
+    }//GEN-LAST:event_jMenuItemExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,9 +144,12 @@ public class GUIProyectoCO extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenuItem jMenuItemExit;
     private javax.swing.JMenuItem jMenuItemOpen;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
