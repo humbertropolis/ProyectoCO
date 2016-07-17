@@ -44,6 +44,7 @@ public class GUIProyectoCO extends javax.swing.JFrame {
         jMenuItemExit = new javax.swing.JMenuItem();
 
         jFileChooser1.setDialogTitle("Abrir Archivo");
+        jFileChooser1.setFileFilter(new MyCustomFilter());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 

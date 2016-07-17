@@ -5,6 +5,9 @@
     <Component class="javax.swing.JFileChooser" name="jFileChooser1">
       <Properties>
         <Property name="dialogTitle" type="java.lang.String" value="Abrir Archivo"/>
+        <Property name="fileFilter" type="javax.swing.filechooser.FileFilter" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new MyCustomFilter()" type="code"/>
+        </Property>
       </Properties>
     </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
