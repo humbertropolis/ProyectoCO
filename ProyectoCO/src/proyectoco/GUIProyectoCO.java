@@ -119,13 +119,9 @@ public class GUIProyectoCO extends javax.swing.JFrame {
                 solv.funcion_obj();
                 solv.restricciones();
                 solv.ejecutar();
-                System.out.println("Value of objective function: " + solv.solver.getObjective()); 
-               
-                
-                jTextArea1.append("\n\nSolucion:\n");
-                double[] var = solv.solver.getPtrVariables();
-                
-                jTextArea1.append(""+ ((int) solv.solver.getObjective() * -1));                 
+                jTextArea1.append("Solucion:\n");
+                double[] var = solv.solver.getPtrVariables();                
+                jTextArea1.append(""+ ((int) solv.solver.getObjective() * -1));                
                 
                 //Contar la cantidad de soluciones:
                 int j = 0;
@@ -213,20 +209,13 @@ public class GUIProyectoCO extends javax.swing.JFrame {
         //Lectura de cantidad de meses
         line = br.readLine();
         K = Integer.parseInt(line);
-        jTextArea1.append("La cantidad de meses es: \n"+K);
-        
+                
         //Lectura de temperatura
         line = br.readLine();
         st = new StringTokenizer(line,"\t");
         T = new Vector();        
         while(st.hasMoreTokens())
             T.add(st.nextToken());
-        
-        jTextArea1.append("\n\nLa temperatura de cada mes es: \n");
-        for(int i=0;i<T.size();i++){
-            s = (String) T.elementAt(i);
-            jTextArea1.append(s+"\n");            
-        }
         
         //Lectura de precipitaciones
         line = br.readLine();
@@ -235,24 +224,12 @@ public class GUIProyectoCO extends javax.swing.JFrame {
         while(st.hasMoreTokens())
             Pr.add(st.nextToken());
         
-        jTextArea1.append("\n\nLa precipitacion de cada mes es: \n");
-        for(int i=0;i<Pr.size();i++){
-            s = (String) Pr.elementAt(i);
-            jTextArea1.append(s+"\n");            
-        }        
-        
         //Lectura de demanda minima
         line = br.readLine();
         st = new StringTokenizer(line,"\t");
         Dmin = new Vector();        
         while(st.hasMoreTokens())
             Dmin.add(st.nextToken());
-        
-        jTextArea1.append("\n\nLa demanda minima de cada mes es: \n");
-        for(int i=0;i<Dmin.size();i++){
-            s = (String) Dmin.elementAt(i);
-            jTextArea1.append(s+"\n");            
-        }        
                 
         //Lectura de demanda maxima
         line = br.readLine();
@@ -261,21 +238,13 @@ public class GUIProyectoCO extends javax.swing.JFrame {
         while(st.hasMoreTokens())
             Dmax.add(st.nextToken());
         
-        jTextArea1.append("\n\nLa demanda maxima de cada mes es: \n");
-        for(int i=0;i<Dmax.size();i++){
-            s = (String) Dmax.elementAt(i);
-            jTextArea1.append(s+"\n");            
-        }                  
-        
         //Lectura de produccion
         line = br.readLine();
         X = Integer.parseInt(line);
-        jTextArea1.append("\nLa produccion mensual es: \n"+X);        
 
         //Lectura de precio
         line = br.readLine();
         $C = Integer.parseInt(line);
-        jTextArea1.append("\n\nEl precio de cada bulto es: \n"+$C);           
         
         br.close();
         fr.close();
