@@ -5,9 +5,14 @@
  */
 package proyectoco;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.StringTokenizer;
+import java.util.Vector;
 
 /**
  *
@@ -94,9 +99,9 @@ public class GUIProyectoCO extends javax.swing.JFrame {
         int returnVal = jFileChooser1.showOpenDialog(this);
         if (returnVal == jFileChooser1.APPROVE_OPTION) {
             File file = jFileChooser1.getSelectedFile();
-            try {
-                // What to do with the file, e.g. display it in a TextArea
-                jTextArea1.read( new FileReader( file.getAbsolutePath() ), null );
+            try {  
+                jTextArea1.setText(null);
+                Builder(file);
             } catch (IOException ex) {
                 System.out.println("problem accessing file"+file.getAbsolutePath());
             }
@@ -109,9 +114,6 @@ public class GUIProyectoCO extends javax.swing.JFrame {
         System.exit(0);         
     }//GEN-LAST:event_jMenuItemExitActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -153,4 +155,91 @@ public class GUIProyectoCO extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
+
+    //Declaracion de variables propias de la aplicacion
+    
+    private int K, X, $C;
+    private Vector T = new Vector();
+    private Vector Pr = new Vector();
+    private Vector Dmin = new Vector();
+    private Vector Dmax = new Vector();
+
+    private void Builder(File file) throws FileNotFoundException, IOException{
+        FileReader fr = new FileReader(file);
+        BufferedReader br = new BufferedReader(fr);
+        String line;
+        String s;
+        StringTokenizer st;        
+                
+        //Lectura de cantidad de meses
+        line = br.readLine();
+        K = Integer.parseInt(line);
+        jTextArea1.append("La cantidad de meses es: \n"+K);
+        
+        //Lectura de temperatura
+        line = br.readLine();
+        st = new StringTokenizer(line,"\t");
+                
+        while(st.hasMoreTokens())
+            T.add(st.nextToken());
+        
+        jTextArea1.append("\n\nLa temperatura de cada mes es: \n");
+        for(int i=0;i<T.size();i++){
+            s = (String) T.elementAt(i);
+            jTextArea1.append(s+"\n");            
+        }
+        
+        //Lectura de precipitaciones
+        line = br.readLine();
+        st = new StringTokenizer(line,"\t");
+                
+        while(st.hasMoreTokens())
+            Pr.add(st.nextToken());
+        
+        jTextArea1.append("\n\nLa precipitacion de cada mes es: \n");
+        for(int i=0;i<Pr.size();i++){
+            s = (String) Pr.elementAt(i);
+            jTextArea1.append(s+"\n");            
+        }        
+        
+        //Lectura de demanda minima
+        line = br.readLine();
+        st = new StringTokenizer(line,"\t");
+                
+        while(st.hasMoreTokens())
+            Dmin.add(st.nextToken());
+        
+        jTextArea1.append("\n\nLa demanda minima de cada mes es: \n");
+        for(int i=0;i<Dmin.size();i++){
+            s = (String) Dmin.elementAt(i);
+            jTextArea1.append(s+"\n");            
+        }        
+                
+        //Lectura de demanda maxima
+        line = br.readLine();
+        st = new StringTokenizer(line,"\t");
+                
+        while(st.hasMoreTokens())
+            Dmax.add(st.nextToken());
+        
+        jTextArea1.append("\n\nLa demanda maxima de cada mes es: \n");
+        for(int i=0;i<Dmax.size();i++){
+            s = (String) Dmax.elementAt(i);
+            jTextArea1.append(s+"\n");            
+        }                  
+        
+        //Lectura de produccion
+        line = br.readLine();
+        X = Integer.parseInt(line);
+        jTextArea1.append("\nLa produccion mensual es: \n"+X);        
+
+        //Lectura de precio
+        line = br.readLine();
+        $C = Integer.parseInt(line);
+        jTextArea1.append("\n\nEl precio de cada bulto es: \n"+$C);           
+        
+        br.close();
+        fr.close();
+       
+    }    
 }
