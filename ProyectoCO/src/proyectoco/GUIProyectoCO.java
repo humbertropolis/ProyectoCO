@@ -1,8 +1,26 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+    This file is part of ProyectoCO.
+
+    ProyectoCO is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    ProyectoCOis distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with ProyectoCO.  If not, see <http://www.gnu.org/licenses/>.
+ 
+   @authors
+   Andres Humberto Agredo Bermudez 0623078 andres.humberto.agredo@correounivalle.edu.co
+   Fernando Sanchez Quintero 1225394 
+   Juan Diego Prado Ramos 1226218 
+   Nelson Portilla 1226934
  */
+
 package proyectoco;
 
 import java.io.BufferedReader;
@@ -13,15 +31,10 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import lpsolve.LpSolveException;
 
-/**
- *
- * @authors
- * Andres Humberto Agredo Bermudez 0623078 
- * Fernando Sanchez Quintero 1225394 
- * Juan Diego Prado Ramos 1226218 
- * Nelson Portilla 1226934
- */
 public class GUIProyectoCO extends javax.swing.JFrame {
 
     /**
@@ -102,8 +115,22 @@ public class GUIProyectoCO extends javax.swing.JFrame {
             try {  
                 jTextArea1.setText(null);
                 Builder(file);
+                Solver solv = new Solver(this.K, this.T, this.Pr, this.Dmin, this.Dmax, this.X, this.$C);
+                solv.funcion_obj();
+                solv.restricciones();
+                solv.ejecutar();
+                System.out.println("Value of objective function: " + solv.solver.getObjective()); 
+               
+                jTextArea1.append("\n\nSolucion:\n");
+                double[] var = solv.solver.getPtrVariables();
+                for (int i = 0; i < var.length; i++) {
+                    jTextArea1.append("\nValue of var[" + i + "] = " + var[i]);
+                }                
+                
             } catch (IOException ex) {
                 System.out.println("problem accessing file"+file.getAbsolutePath());
+            } catch (LpSolveException ex) {
+                Logger.getLogger(GUIProyectoCO.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             System.out.println("File access cancelled by user.");
@@ -159,10 +186,10 @@ public class GUIProyectoCO extends javax.swing.JFrame {
     //Declaracion de variables propias de la aplicacion
     
     private int K, X, $C;
-    private Vector T = new Vector();
-    private Vector Pr = new Vector();
-    private Vector Dmin = new Vector();
-    private Vector Dmax = new Vector();
+    private Vector T;
+    private Vector Pr;
+    private Vector Dmin;
+    private Vector Dmax;
 
     private void Builder(File file) throws FileNotFoundException, IOException{
         FileReader fr = new FileReader(file);
@@ -179,7 +206,7 @@ public class GUIProyectoCO extends javax.swing.JFrame {
         //Lectura de temperatura
         line = br.readLine();
         st = new StringTokenizer(line,"\t");
-                
+        T = new Vector();        
         while(st.hasMoreTokens())
             T.add(st.nextToken());
         
@@ -192,7 +219,7 @@ public class GUIProyectoCO extends javax.swing.JFrame {
         //Lectura de precipitaciones
         line = br.readLine();
         st = new StringTokenizer(line,"\t");
-                
+        Pr = new Vector();        
         while(st.hasMoreTokens())
             Pr.add(st.nextToken());
         
@@ -205,7 +232,7 @@ public class GUIProyectoCO extends javax.swing.JFrame {
         //Lectura de demanda minima
         line = br.readLine();
         st = new StringTokenizer(line,"\t");
-                
+        Dmin = new Vector();        
         while(st.hasMoreTokens())
             Dmin.add(st.nextToken());
         
@@ -218,7 +245,7 @@ public class GUIProyectoCO extends javax.swing.JFrame {
         //Lectura de demanda maxima
         line = br.readLine();
         st = new StringTokenizer(line,"\t");
-                
+        Dmax = new Vector();       
         while(st.hasMoreTokens())
             Dmax.add(st.nextToken());
         
