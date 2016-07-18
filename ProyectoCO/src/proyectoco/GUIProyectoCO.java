@@ -121,10 +121,22 @@ public class GUIProyectoCO extends javax.swing.JFrame {
                 solv.ejecutar();
                 System.out.println("Value of objective function: " + solv.solver.getObjective()); 
                
+                
                 jTextArea1.append("\n\nSolucion:\n");
                 double[] var = solv.solver.getPtrVariables();
+                
+                jTextArea1.append(""+ ((int) solv.solver.getObjective() * -1));                 
+                
+                //Contar la cantidad de soluciones:
+                int j = 0;
                 for (int i = 0; i < var.length; i++) {
-                    jTextArea1.append("\nValue of var[" + i + "] = " + var[i]);
+                    if(var[i]==1)
+                        j++;
+                }                
+                jTextArea1.append("\n"+j);
+                for (int i = 0; i < var.length; i++) {
+                    if(var[i]==1)
+                        jTextArea1.append("\n"+(i+1));
                 }                
                 
             } catch (IOException ex) {

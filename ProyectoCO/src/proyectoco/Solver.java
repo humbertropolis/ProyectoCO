@@ -31,13 +31,13 @@ import lpsolve.LpSolveException;
 
 public class Solver {
     public LpSolve solver;
-    int meses;
-    int [] temperaturas;
-    int [] precipitacion;
-    int [] d_min;
-    int [] d_max;
-    int produccion;
-    int precio;
+    private int meses;
+    private int [] temperaturas;
+    private int [] precipitacion;
+    private int [] d_min;
+    private int [] d_max;
+    private int produccion;
+    private int precio;
     
 //metodo que inicaliza el solver 
     public Solver(int meses, Vector T, Vector Pr, Vector Dmin, Vector Dmax, int X, int $C) {
