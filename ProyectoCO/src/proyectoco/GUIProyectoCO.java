@@ -56,6 +56,7 @@ public class GUIProyectoCO extends javax.swing.JFrame {
     private void initComponents() {
 
         jFileChooser1 = new javax.swing.JFileChooser();
+        jFileChooser2 = new javax.swing.JFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -66,6 +67,8 @@ public class GUIProyectoCO extends javax.swing.JFrame {
 
         jFileChooser1.setDialogTitle("Abrir Archivo");
         jFileChooser1.setFileFilter(new MyCustomFilter());
+
+        jFileChooser2.setFileFilter(new MyCustomFilter());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -163,11 +166,11 @@ public class GUIProyectoCO extends javax.swing.JFrame {
     private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSaveActionPerformed
         try{           
             String nombre = "";
-            jFileChooser1.showSaveDialog(this);
-            File save = jFileChooser1.getSelectedFile();
+            jFileChooser2.showSaveDialog(this);
+            File save = jFileChooser2.getSelectedFile();
             if(save != null){
-                nombre= jFileChooser1.getSelectedFile().getName();
-                FileWriter fw = new FileWriter(save);                
+                nombre= jFileChooser2.getSelectedFile().getName();
+                FileWriter fw = new FileWriter(save+".txt");                
                 fw.write(jTextArea1.getText());                
                 fw.close();
             }
@@ -211,6 +214,7 @@ public class GUIProyectoCO extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenuItem jMenuItemExit;
