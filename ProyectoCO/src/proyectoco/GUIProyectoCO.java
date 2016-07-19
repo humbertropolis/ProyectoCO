@@ -27,12 +27,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.DefaultEditorKit;
 import lpsolve.LpSolveException;
 
 public class GUIProyectoCO extends javax.swing.JFrame {
@@ -59,6 +61,7 @@ public class GUIProyectoCO extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuItemOpen = new javax.swing.JMenuItem();
+        jMenuItemSave = new javax.swing.JMenuItem();
         jMenuItemExit = new javax.swing.JMenuItem();
 
         jFileChooser1.setDialogTitle("Abrir Archivo");
@@ -72,7 +75,7 @@ public class GUIProyectoCO extends javax.swing.JFrame {
 
         jMenuFile.setText("Archivo");
 
-        jMenuItemOpen.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItemOpen.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
         jMenuItemOpen.setText("Abrir");
         jMenuItemOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,6 +83,15 @@ public class GUIProyectoCO extends javax.swing.JFrame {
             }
         });
         jMenuFile.add(jMenuItemOpen);
+
+        jMenuItemSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemSave.setText("Guardar");
+        jMenuItemSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSaveActionPerformed(evt);
+            }
+        });
+        jMenuFile.add(jMenuItemSave);
 
         jMenuItemExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.ALT_MASK));
         jMenuItemExit.setText("Salir");
@@ -119,7 +131,6 @@ public class GUIProyectoCO extends javax.swing.JFrame {
                 solv.funcion_obj();
                 solv.restricciones();
                 solv.ejecutar();
-                jTextArea1.append("Solucion:\n");
                 double[] var = solv.solver.getPtrVariables();                
                 jTextArea1.append(""+ ((int) solv.solver.getObjective() * -1));                
                 
@@ -129,10 +140,10 @@ public class GUIProyectoCO extends javax.swing.JFrame {
                     if(var[i]==1)
                         j++;
                 }                
-                jTextArea1.append("\n"+j);
+                jTextArea1.append("\r\n"+j);
                 for (int i = 0; i < var.length; i++) {
                     if(var[i]==1)
-                        jTextArea1.append("\n"+(i+1));
+                        jTextArea1.append("\r\n"+(i+1));
                 }                
                 
             } catch (IOException ex) {
@@ -148,6 +159,23 @@ public class GUIProyectoCO extends javax.swing.JFrame {
     private void jMenuItemExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExitActionPerformed
         System.exit(0);         
     }//GEN-LAST:event_jMenuItemExitActionPerformed
+
+    private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSaveActionPerformed
+        try{           
+            String nombre = "";
+            jFileChooser1.showSaveDialog(this);
+            File save = jFileChooser1.getSelectedFile();
+            if(save != null){
+                nombre= jFileChooser1.getSelectedFile().getName();
+                FileWriter fw = new FileWriter(save);                
+                fw.write(jTextArea1.getText());                
+                fw.close();
+            }
+        }
+        catch(IOException exp){
+            System.out.println(exp);
+        }
+    }//GEN-LAST:event_jMenuItemSaveActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -187,6 +215,7 @@ public class GUIProyectoCO extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenuItem jMenuItemExit;
     private javax.swing.JMenuItem jMenuItemOpen;
+    private javax.swing.JMenuItem jMenuItemSave;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
