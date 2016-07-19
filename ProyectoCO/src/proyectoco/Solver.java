@@ -38,6 +38,7 @@ public class Solver {
     private int [] d_max;
     private int produccion;
     private int precio;
+    private long TInicio, TFin, tiempo; //Variables para determinar el tiempo de ejecución
     
 //metodo que inicaliza el solver 
     public Solver(int meses, Vector T, Vector Pr, Vector Dmin, Vector Dmax, int X, int $C) {
@@ -256,7 +257,12 @@ public class Solver {
     public void ejecutar ()
     {
         try {
-            this.solver.solve();
+            TInicio = System.currentTimeMillis(); //Tomamos la hora en que inicio el solver
+            this.solver.solve(); 
+            TFin = System.currentTimeMillis(); //Tomamos la hora en que finalizó el solver
+            tiempo = TFin - TInicio; //Calculamos los milisegundos de diferencia
+            //Mostramos en pantalla el tiempo de ejecución en milisegundos
+            System.out.println("Tiempo de ejecución es: "+tiempo+" milisegundos"); 
         } catch (LpSolveException ex) {
             Logger.getLogger(Solver.class.getName()).log(Level.SEVERE, null, ex);
         }
